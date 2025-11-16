@@ -400,9 +400,9 @@ const KeetaDashboard = () => {
   const isRTL = language === 'ar' || language === 'ur';
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-yellow-50 to-yellow-100 p-4 ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
-      {/* Header */}
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-yellow-100 p-4">
+      {/* Header - Always LTR */}
+      <div className="max-w-7xl mx-auto" dir="ltr">
         <div className="bg-yellow-400 rounded-2xl shadow-2xl p-6 mb-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-4">
@@ -411,7 +411,7 @@ const KeetaDashboard = () => {
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-black">{t.title}</h1>
             </div>
-            
+
             {/* Language Selector */}
             <div className="flex flex-wrap gap-2">
               <button
@@ -457,7 +457,10 @@ const KeetaDashboard = () => {
             </div>
           </div>
         </div>
+      </div>
 
+      {/* Content - Changes direction based on language */}
+      <div className={`max-w-7xl mx-auto ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
         {/* Section 1: Wrong Order Protocol */}
         <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
           <div className="flex items-start gap-3 mb-4">
