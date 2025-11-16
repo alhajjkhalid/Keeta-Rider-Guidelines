@@ -1,0 +1,658 @@
+import React, { useState } from 'react';
+import { AlertTriangle, CheckCircle, XCircle, Package, Clock, MapPin, MessageCircle, Camera, FileText } from 'lucide-react';
+
+const KeetaDashboard = () => {
+  const [language, setLanguage] = useState('en');
+
+  const content = {
+    en: {
+      title: "Keeta Delivery Guidelines Dashboard",
+      selectLanguage: "Select Language",
+      
+      section1: {
+        title: "What to Do if Another Rider Takes Your Order",
+        prevention: "To make sure you take the right order every time:",
+        preventionItems: [
+          "Match the order number in your app with the merchant's order",
+          "Check the items before leaving"
+        ],
+        ifMissing: "If the meal is missing or taken by another rider:",
+        steps: [
+          "Report the issue to the Customer Service (CS) team through the app",
+          "Wait at the restaurant while the CS team confirms with the merchant and resolves the issue",
+          "Follow the instructions given by the CS team before leaving the location"
+        ],
+        warning: "Never take another rider's order, as this can lead to account termination.",
+        reminder: "Always go to the merchant quickly, collect your assigned order and follow the correct process to ensure smooth deliveries!"
+      },
+
+      section2: {
+        title: "Do Not Mark Orders 'Delivered' Before Handover to Customer",
+        notice: "We've noticed that you've marked some orders as 'Delivered' before handing them to the customer.",
+        unacceptable: "This is not acceptable and goes against Keeta delivery standards!",
+        rule: "Always tap 'Delivered' only after handing the order to the customer.",
+        consequence: "Not following this can lead to penalties or suspension!"
+      },
+
+      section3: {
+        title: "Warning: Guidelines to Prevent Wrong Order Delivery",
+        intro: "Follow these guidelines to prevent wrong orders. Repeated mistakes may lead to penalties or suspension.",
+        guideline1: "Check Order Number at Pickup:",
+        guideline1Text: "Do not just take the package handed by the merchant. You must verify the order number in your app matches the package before leaving.",
+        guideline2: "Double-Check Before Delivery:",
+        guideline2Text: "If you have multiple orders, make sure you hand the correct order to each customer.",
+        footer: "Follow these guidelines carefully to prevent issues."
+      },
+
+      section4: {
+        title: "Best Practices Checklist",
+        items: [
+          "Confirm address before heading to the drop-off location",
+          "Contact customer if you cannot find the location",
+          "Hand over the order in person whenever possible",
+          "Only click 'Drop Off' after delivery is completed (don't click in advance)",
+          "Report any abnormal issues with evidence"
+        ]
+      },
+
+      section5: {
+        title: "Tips for Ensuring Successful Order Delivery",
+        tip1: "Do NOT Click 'Drop Off' in Advance",
+        tip1Items: [
+          "Only click 'Drop-off' after you have handed the order to the customer",
+          "Clicking 'Drop-off' before actual delivery can lead to confusion and complaints from customers, and could result in deductions"
+        ],
+        tip2: "Contact Customer Before Drop Off",
+        tip2Items: [
+          "Always call or message the customer through Keeta app once you arrive at the location",
+          "If you're not able to reach the customer to confirm the address details, report in the Keeta app under 'Unable to Contact Customer' category",
+          "Failing to report and leaving the order at the wrong location may lead to penalties from Keeta"
+        ],
+        tip3: "Follow the Delivery Instructions from Customer",
+        tip3Items: [
+          "If the customer prefers delivery to a specific spot, place the order exactly as instructed (front door, lobby, front desk, etc.)",
+          "If the customer prefers direct delivery, first try handing the order to them. If they can't be reached, deliver to their chosen backup location (front door, lobby, or front desk)",
+          "After delivery, select the correct quick reply in the app: 'placed at designated location' or 'I left it at your doorstep' according to the customer's preference"
+        ],
+        tip4: "Report Abnormal Issues in the App with Solid Reason and Proof",
+        tip4Items: [
+          "If you encounter any problems (eg. customer unreachable, incorrect address, unsafe environment) report it in the app immediately",
+          "Provide clear reasons and attach required evidence (photos and screenshots with customer conversation in case of address change request)",
+          "Detailed reporting helps resolve disputes and protects you from false claims"
+        ]
+      }
+    },
+
+    ar: {
+      title: "لوحة معلومات إرشادات التوصيل - كيتا",
+      selectLanguage: "اختر اللغة",
+      
+      section1: {
+        title: "ماذا تفعل إذا أخذ سائق آخر طلبك",
+        prevention: "للتأكد من أخذ الطلب الصحيح في كل مرة:",
+        preventionItems: [
+          "طابق رقم الطلب في تطبيقك مع طلب التاجر",
+          "تحقق من العناصر قبل المغادرة"
+        ],
+        ifMissing: "إذا كانت الوجبة مفقودة أو أخذها سائق آخر:",
+        steps: [
+          "أبلغ عن المشكلة لفريق خدمة العملاء من خلال التطبيق",
+          "انتظر في المطعم بينما يؤكد فريق خدمة العملاء مع التاجر ويحل المشكلة",
+          "اتبع التعليمات المقدمة من فريق خدمة العملاء قبل مغادرة الموقع"
+        ],
+        warning: "لا تأخذ أبداً طلب سائق آخر، حيث قد يؤدي ذلك إلى إنهاء الحساب.",
+        reminder: "اذهب دائماً إلى التاجر بسرعة، واجمع طلبك المخصص واتبع العملية الصحيحة لضمان توصيل سلس!"
+      },
+
+      section2: {
+        title: "لا تضع علامة 'تم التسليم' قبل تسليم الطلب للعميل",
+        notice: "لاحظنا أنك قمت بوضع علامة على بعض الطلبات بأنها 'تم التسليم' قبل تسليمها للعميل.",
+        unacceptable: "هذا غير مقبول ويتعارض مع معايير التوصيل في كيتا!",
+        rule: "اضغط دائماً على 'تم التسليم' فقط بعد تسليم الطلب للعميل.",
+        consequence: "عدم اتباع ذلك قد يؤدي إلى عقوبات أو إيقاف!"
+      },
+
+      section3: {
+        title: "تحذير: إرشادات لمنع توصيل الطلب الخاطئ",
+        intro: "اتبع هذه الإرشادات لمنع الطلبات الخاطئة. الأخطاء المتكررة قد تؤدي إلى عقوبات أو إيقاف.",
+        guideline1: "تحقق من رقم الطلب عند الاستلام:",
+        guideline1Text: "لا تأخذ الطرد المسلم من التاجر فقط. يجب عليك التحقق من أن رقم الطلب في تطبيقك يطابق الطرد قبل المغادرة.",
+        guideline2: "تحقق مرة أخرى قبل التوصيل:",
+        guideline2Text: "إذا كان لديك طلبات متعددة، تأكد من تسليم الطلب الصحيح لكل عميل.",
+        footer: "اتبع هذه الإرشادات بعناية لمنع المشاكل."
+      },
+
+      section4: {
+        title: "قائمة أفضل الممارسات",
+        items: [
+          "تأكد من العنوان قبل التوجه إلى موقع التسليم",
+          "اتصل بالعميل إذا لم تتمكن من العثور على الموقع",
+          "سلم الطلب شخصياً كلما أمكن ذلك",
+          "اضغط على 'تم التوصيل' فقط بعد اكتمال التسليم (لا تضغط مسبقاً)",
+          "أبلغ عن أي مشاكل غير طبيعية بالأدلة"
+        ]
+      },
+
+      section5: {
+        title: "نصائح لضمان توصيل الطلب بنجاح",
+        tip1: "لا تضغط على 'تم التوصيل' مسبقاً",
+        tip1Items: [
+          "اضغط على 'تم التوصيل' فقط بعد تسليم الطلب للعميل",
+          "الضغط على 'تم التوصيل' قبل التسليم الفعلي قد يؤدي إلى ارتباك وشكاوى من العملاء، وقد يؤدي إلى خصومات"
+        ],
+        tip2: "اتصل بالعميل قبل التوصيل",
+        tip2Items: [
+          "اتصل دائماً أو أرسل رسالة للعميل عبر تطبيق كيتا بمجرد وصولك إلى الموقع",
+          "إذا لم تتمكن من الوصول إلى العميل لتأكيد تفاصيل العنوان، أبلغ في تطبيق كيتا تحت فئة 'غير قادر على الاتصال بالعميل'",
+          "عدم الإبلاغ وترك الطلب في الموقع الخاطئ قد يؤدي إلى عقوبات من كيتا"
+        ],
+        tip3: "اتبع تعليمات التوصيل من العميل",
+        tip3Items: [
+          "إذا كان العميل يفضل التوصيل إلى مكان محدد، ضع الطلب تماماً كما هو موضح (الباب الأمامي، اللوبي، مكتب الاستقبال، إلخ.)",
+          "إذا كان العميل يفضل التوصيل المباشر، حاول أولاً تسليم الطلب له. إذا لم يتمكن من الوصول، سلم إلى موقع النسخ الاحتياطي المختار (الباب الأمامي، اللوبي، أو مكتب الاستقبال)",
+          "بعد التسليم، حدد الرد السريع الصحيح في التطبيق: 'تم وضعه في الموقع المحدد' أو 'تركته عند عتبة بابك' وفقاً لتفضيل العميل"
+        ],
+        tip4: "أبلغ عن المشاكل غير الطبيعية في التطبيق بسبب وجيه وإثبات",
+        tip4Items: [
+          "إذا واجهت أي مشاكل (مثل عدم إمكانية الوصول للعميل، عنوان غير صحيح، بيئة غير آمنة) أبلغ عنها في التطبيق فوراً",
+          "قدم أسباباً واضحة وأرفق الأدلة المطلوبة (صور ولقطات شاشة مع محادثة العميل في حالة طلب تغيير العنوان)",
+          "الإبلاغ التفصيلي يساعد في حل النزاعات ويحميك من المطالبات الكاذبة"
+        ]
+      }
+    },
+
+    ur: {
+      title: "کیتا ڈیلیوری گائیڈ لائنز ڈیش بورڈ",
+      selectLanguage: "زبان منتخب کریں",
+      
+      section1: {
+        title: "اگر کوئی دوسرا رائیڈر آپ کا آرڈر لے جائے تو کیا کریں",
+        prevention: "ہر بار صحیح آرڈر لینے کے لیے:",
+        preventionItems: [
+          "اپنی ایپ میں آرڈر نمبر کو مرچنٹ کے آرڈر سے ملائیں",
+          "جانے سے پہلے اشیاء کی جانچ کریں"
+        ],
+        ifMissing: "اگر کھانا غائب ہے یا کسی دوسرے رائیڈر نے لے لیا ہے:",
+        steps: [
+          "ایپ کے ذریعے کسٹمر سروس (CS) ٹیم کو مسئلہ کی اطلاع دیں",
+          "ریستوران میں انتظار کریں جب تک CS ٹیم مرچنٹ کے ساتھ تصدیق کرے اور مسئلہ حل کرے",
+          "مقام چھوڑنے سے پہلے CS ٹیم کی طرف سے دی گئی ہدایات پر عمل کریں"
+        ],
+        warning: "کبھی بھی کسی دوسرے رائیڈر کا آرڈر نہ لیں، کیونکہ اس سے اکاؤنٹ ختم ہو سکتا ہے۔",
+        reminder: "ہمیشہ فوری طور پر مرچنٹ کے پاس جائیں، اپنا مختص کردہ آرڈر جمع کریں اور ہموار ڈیلیوری کو یقینی بنانے کے لیے صحیح طریقہ کار پر عمل کریں!"
+      },
+
+      section2: {
+        title: "گاہک کو دینے سے پہلے آرڈر کو 'ڈیلیور' کا نشان نہ لگائیں",
+        notice: "ہم نے دیکھا ہے کہ آپ نے کچھ آرڈرز کو گاہک کو دینے سے پہلے 'ڈیلیور' کا نشان لگا دیا ہے۔",
+        unacceptable: "یہ قابل قبول نہیں ہے اور کیتا ڈیلیوری معیارات کے خلاف ہے!",
+        rule: "ہمیشہ گاہک کو آرڈر دینے کے بعد ہی 'ڈیلیور' پر ٹیپ کریں۔",
+        consequence: "اس پر عمل نہ کرنے سے جرمانے یا معطلی ہو سکتی ہے!"
+      },
+
+      section3: {
+        title: "انتباہ: غلط آرڈر ڈیلیوری سے بچنے کے لیے رہنما خطوط",
+        intro: "غلط آرڈر سے بچنے کے لیے ان رہنما خطوط پر عمل کریں۔ بار بار کی غلطیاں جرمانے یا معطلی کا باعث بن سکتی ہیں۔",
+        guideline1: "پک اپ پر آرڈر نمبر چیک کریں:",
+        guideline1Text: "صرف مرچنٹ کی طرف سے دیا گیا پیکج نہ لیں۔ آپ کو جانے سے پہلے تصدیق کرنی ہوگی کہ آپ کی ایپ میں آرڈر نمبر پیکج سے مماثل ہے۔",
+        guideline2: "ڈیلیوری سے پہلے دوبارہ چیک کریں:",
+        guideline2Text: "اگر آپ کے پاس متعدد آرڈر ہیں، تو یقینی بنائیں کہ آپ ہر گاہک کو صحیح آرڈر دیں۔",
+        footer: "مسائل سے بچنے کے لیے ان رہنما خطوط پر احتیاط سے عمل کریں۔"
+      },
+
+      section4: {
+        title: "بہترین طریقوں کی فہرست",
+        items: [
+          "ڈراپ آف مقام پر جانے سے پہلے پتے کی تصدیق کریں",
+          "اگر آپ مقام تلاش نہیں کر سکتے تو گاہک سے رابطہ کریں",
+          "جب بھی ممکن ہو ذاتی طور پر آرڈر دیں",
+          "ڈیلیوری مکمل ہونے کے بعد ہی 'ڈراپ آف' پر کلک کریں (پیشگی کلک نہ کریں)",
+          "ثبوت کے ساتھ کسی بھی غیر معمولی مسائل کی اطلاع دیں"
+        ]
+      },
+
+      section5: {
+        title: "کامیاب آرڈر ڈیلیوری کو یقینی بنانے کے لیے تجاویز",
+        tip1: "پیشگی 'ڈراپ آف' پر کلک نہ کریں",
+        tip1Items: [
+          "صرف گاہک کو آرڈر دینے کے بعد 'ڈراپ آف' پر کلک کریں",
+          "اصل ڈیلیوری سے پہلے 'ڈراپ آف' پر کلک کرنے سے گاہکوں کی جانب سے الجھن اور شکایات ہو سکتی ہیں، اور کٹوتیوں کا باعث بن سکتا ہے"
+        ],
+        tip2: "ڈراپ آف سے پہلے گاہک سے رابطہ کریں",
+        tip2Items: [
+          "جب آپ مقام پر پہنچیں تو ہمیشہ کیتا ایپ کے ذریعے گاہک کو کال یا پیغام کریں",
+          "اگر آپ پتے کی تفصیلات کی تصدیق کے لیے گاہک سے رابطہ نہیں کر سکتے، تو کیتا ایپ میں 'گاہک سے رابطہ کرنے میں ناکام' زمرے کے تحت رپورٹ کریں",
+          "رپورٹ نہ کرنا اور غلط مقام پر آرڈر چھوڑنا کیتا سے جرمانے کا باعث بن سکتا ہے"
+        ],
+        tip3: "گاہک کی ڈیلیوری ہدایات پر عمل کریں",
+        tip3Items: [
+          "اگر گاہک کسی مخصوص جگہ پر ڈیلیوری کو ترجیح دیتا ہے، تو آرڈر کو بالکل ہدایت کے مطابق رکھیں (سامنے کا دروازہ، لابی، سامنے کی میز وغیرہ)",
+          "اگر گاہک براہ راست ڈیلیوری کو ترجیح دیتا ہے، تو پہلے آرڈر انہیں دینے کی کوشش کریں۔ اگر ان سے رابطہ نہیں ہو سکتا، تو ان کے منتخب کردہ بیک اپ مقام پر ڈیلیور کریں (سامنے کا دروازہ، لابی، یا سامنے کی میز)",
+          "ڈیلیوری کے بعد، ایپ میں صحیح فوری جواب منتخب کریں: 'نامزد مقام پر رکھا' یا 'میں نے اسے آپ کی دہلیز پر چھوڑ دیا' گاہک کی ترجیح کے مطابق"
+        ],
+        tip4: "ٹھوس وجہ اور ثبوت کے ساتھ ایپ میں غیر معمولی مسائل کی اطلاع دیں",
+        tip4Items: [
+          "اگر آپ کو کوئی مسئلہ درپیش ہو (مثلاً گاہک تک رسائی ممکن نہیں، غلط پتہ، غیر محفوظ ماحول) تو فوری طور پر ایپ میں اس کی اطلاع دیں",
+          "واضح وجوہات فراہم کریں اور مطلوبہ ثبوت منسلک کریں (تصاویر اور اسکرین شاٹس گاہک کے ساتھ گفتگو کے ساتھ پتہ تبدیل کرنے کی درخواست کی صورت میں)",
+          "تفصیلی رپورٹنگ تنازعات کو حل کرنے میں مدد کرتی ہے اور جھوٹے دعووں سے آپ کی حفاظت کرتی ہے"
+        ]
+      }
+    },
+
+    bn: {
+      title: "কীটা ডেলিভারি গাইডলাইন ড্যাশবোর্ড",
+      selectLanguage: "ভাষা নির্বাচন করুন",
+      
+      section1: {
+        title: "অন্য রাইডার আপনার অর্ডার নিয়ে গেলে কী করবেন",
+        prevention: "প্রতিবার সঠিক অর্ডার নেওয়ার জন্য:",
+        preventionItems: [
+          "আপনার অ্যাপে অর্ডার নম্বরটি মার্চেন্টের অর্ডারের সাথে মিলিয়ে নিন",
+          "চলে যাওয়ার আগে আইটেমগুলি চেক করুন"
+        ],
+        ifMissing: "যদি খাবার হারিয়ে যায় বা অন্য রাইডার নিয়ে যায়:",
+        steps: [
+          "অ্যাপের মাধ্যমে কাস্টমার সার্ভিস (CS) টিমকে সমস্যাটি রিপোর্ট করুন",
+          "রেস্তোরাঁয় অপেক্ষা করুন যখন CS টিম মার্চেন্টের সাথে নিশ্চিত করে এবং সমস্যাটি সমাধান করে",
+          "লোকেশন ছেড়ে যাওয়ার আগে CS টিমের দেওয়া নির্দেশাবলী অনুসরণ করুন"
+        ],
+        warning: "কখনও অন্য রাইডারের অর্ডার নেবেন না, কারণ এটি অ্যাকাউন্ট বাতিলের কারণ হতে পারে।",
+        reminder: "সবসময় দ্রুত মার্চেন্টের কাছে যান, আপনার নির্ধারিত অর্ডার সংগ্রহ করুন এবং মসৃণ ডেলিভারি নিশ্চিত করতে সঠিক প্রক্রিয়া অনুসরণ করুন!"
+      },
+
+      section2: {
+        title: "গ্রাহককে দেওয়ার আগে অর্ডার 'ডেলিভার' হিসাবে চিহ্নিত করবেন না",
+        notice: "আমরা লক্ষ্য করেছি যে আপনি গ্রাহককে দেওয়ার আগে কিছু অর্ডার 'ডেলিভার' হিসাবে চিহ্নিত করেছেন।",
+        unacceptable: "এটি গ্রহণযোগ্য নয় এবং কীটা ডেলিভারি মানদণ্ডের বিরুদ্ধে!",
+        rule: "সবসময় গ্রাহককে অর্ডার দেওয়ার পরেই 'ডেলিভার' ট্যাপ করুন।",
+        consequence: "এটি অনুসরণ না করলে জরিমানা বা সাসপেনশন হতে পারে!"
+      },
+
+      section3: {
+        title: "সতর্কতা: ভুল অর্ডার ডেলিভারি প্রতিরোধের নির্দেশিকা",
+        intro: "ভুল অর্ডার প্রতিরোধ করতে এই নির্দেশিকাগুলি অনুসরণ করুন। বারবার ভুল হলে জরিমানা বা সাসপেনশন হতে পারে।",
+        guideline1: "পিকআপে অর্ডার নম্বর চেক করুন:",
+        guideline1Text: "মার্চেন্টের দেওয়া প্যাকেজটি শুধু নেবেন না। চলে যাওয়ার আগে আপনার অ্যাপে অর্ডার নম্বরটি প্যাকেজের সাথে মিলছে কিনা তা যাচাই করতে হবে।",
+        guideline2: "ডেলিভারির আগে আবার চেক করুন:",
+        guideline2Text: "আপনার যদি একাধিক অর্ডার থাকে, তবে নিশ্চিত করুন যে আপনি প্রতিটি গ্রাহককে সঠিক অর্ডার দিচ্ছেন।",
+        footer: "সমস্যা প্রতিরোধ করতে এই নির্দেশিকাগুলি সাবধানে অনুসরণ করুন।"
+      },
+
+      section4: {
+        title: "সেরা অনুশীলন চেকলিস্ট",
+        items: [
+          "ড্রপ-অফ লোকেশনে যাওয়ার আগে ঠিকানা নিশ্চিত করুন",
+          "লোকেশন খুঁজে না পেলে গ্রাহকের সাথে যোগাযোগ করুন",
+          "যখনই সম্ভব ব্যক্তিগতভাবে অর্ডার হস্তান্তর করুন",
+          "ডেলিভারি সম্পূর্ণ হওয়ার পরেই 'ড্রপ অফ' ক্লিক করুন (আগে থেকে ক্লিক করবেন না)",
+          "প্রমাণসহ যেকোনো অস্বাভাবিক সমস্যা রিপোর্ট করুন"
+        ]
+      },
+
+      section5: {
+        title: "সফল অর্ডার ডেলিভারি নিশ্চিত করার টিপস",
+        tip1: "আগে থেকে 'ড্রপ অফ' ক্লিক করবেন না",
+        tip1Items: [
+          "শুধুমাত্র গ্রাহককে অর্ডার দেওয়ার পরে 'ড্রপ-অফ' ক্লিক করুন",
+          "প্রকৃত ডেলিভারির আগে 'ড্রপ-অফ' ক্লিক করলে গ্রাহকদের থেকে বিভ্রান্তি এবং অভিযোগ হতে পারে, এবং কর্তনের কারণ হতে পারে"
+        ],
+        tip2: "ড্রপ অফের আগে গ্রাহকের সাথে যোগাযোগ করুন",
+        tip2Items: [
+          "লোকেশনে পৌঁছানোর পরে সবসময় কীটা অ্যাপের মাধ্যমে গ্রাহককে কল বা মেসেজ করুন",
+          "ঠিকানার বিবরণ নিশ্চিত করতে গ্রাহকের সাথে যোগাযোগ করতে না পারলে, কীটা অ্যাপে 'গ্রাহকের সাথে যোগাযোগ করতে অক্ষম' ক্যাটাগরিতে রিপোর্ট করুন",
+          "রিপোর্ট না করে ভুল লোকেশনে অর্ডার রেখে যাওয়া কীটা থেকে জরিমানার কারণ হতে পারে"
+        ],
+        tip3: "গ্রাহকের ডেলিভারি নির্দেশাবলী অনুসরণ করুন",
+        tip3Items: [
+          "গ্রাহক যদি নির্দিষ্ট স্থানে ডেলিভারি পছন্দ করেন, তবে নির্দেশ অনুযায়ী অর্ডারটি ঠিক সেভাবে রাখুন (সামনের দরজা, লবি, সামনের ডেস্ক ইত্যাদি)",
+          "গ্রাহক সরাসরি ডেলিভারি পছন্দ করলে, প্রথমে তাদের কাছে অর্ডারটি দেওয়ার চেষ্টা করুন। যদি তাদের সাথে যোগাযোগ না হয়, তবে তাদের নির্বাচিত ব্যাকআপ লোকেশনে ডেলিভার করুন (সামনের দরজা, লবি বা সামনের ডেস্ক)",
+          "ডেলিভারির পরে, অ্যাপে সঠিক দ্রুত উত্তর নির্বাচন করুন: 'নির্ধারিত স্থানে রাখা হয়েছে' বা 'আমি এটি আপনার দরজায় রেখে এসেছি' গ্রাহকের পছন্দ অনুযায়ী"
+        ],
+        tip4: "শক্ত কারণ এবং প্রমাণসহ অ্যাপে অস্বাভাবিক সমস্যা রিপোর্ট করুন",
+        tip4Items: [
+          "আপনি কোনো সমস্যার সম্মুখীন হলে (যেমন গ্রাহকের সাথে যোগাযোগ করা যাচ্ছে না, ভুল ঠিকানা, অনিরাপদ পরিবেশ) তাৎক্ষণিকভাবে অ্যাপে রিপোর্ট করুন",
+          "স্পষ্ট কারণ প্রদান করুন এবং প্রয়োজনীয় প্রমাণ সংযুক্ত করুন (ফটো এবং স্ক্রিনশট গ্রাহকের সাথে কথোপকথনসহ ঠিকানা পরিবর্তনের অনুরোধের ক্ষেত্রে)",
+          "বিস্তারিত রিপোর্টিং বিরোধ সমাধানে সহায়তা করে এবং মিথ্যা দাবি থেকে আপনাকে রক্ষা করে"
+        ]
+      }
+    },
+
+    hi: {
+      title: "कीटा डिलीवरी दिशानिर्देश डैशबोर्ड",
+      selectLanguage: "भाषा चुनें",
+      
+      section1: {
+        title: "यदि कोई अन्य राइडर आपका ऑर्डर ले जाए तो क्या करें",
+        prevention: "हर बार सही ऑर्डर लेने के लिए:",
+        preventionItems: [
+          "अपने ऐप में ऑर्डर नंबर को व्यापारी के ऑर्डर से मिलाएं",
+          "जाने से पहले आइटम चेक करें"
+        ],
+        ifMissing: "यदि भोजन गायब है या किसी अन्य राइडर ने ले लिया है:",
+        steps: [
+          "ऐप के माध्यम से कस्टमर सर्विस (CS) टीम को समस्या की रिपोर्ट करें",
+          "रेस्तरां में प्रतीक्षा करें जब तक CS टीम व्यापारी के साथ पुष्टि करे और समस्या हल करे",
+          "स्थान छोड़ने से पहले CS टीम द्वारा दिए गए निर्देशों का पालन करें"
+        ],
+        warning: "कभी भी किसी अन्य राइडर का ऑर्डर न लें, क्योंकि इससे खाता समाप्त हो सकता है।",
+        reminder: "हमेशा जल्दी से व्यापारी के पास जाएं, अपना निर्धारित ऑर्डर इकट्ठा करें और सुचारू डिलीवरी सुनिश्चित करने के लिए सही प्रक्रिया का पालन करें!"
+      },
+
+      section2: {
+        title: "ग्राहक को देने से पहले ऑर्डर को 'डिलीवर' चिह्नित न करें",
+        notice: "हमने देखा है कि आपने कुछ ऑर्डर को ग्राहक को देने से पहले 'डिलीवर' चिह्नित किया है।",
+        unacceptable: "यह स्वीकार्य नहीं है और कीटा डिलीवरी मानकों के खिलाफ है!",
+        rule: "हमेशा ग्राहक को ऑर्डर देने के बाद ही 'डिलीवर' पर टैप करें।",
+        consequence: "इसका पालन न करने पर जुर्माना या निलंबन हो सकता है!"
+      },
+
+      section3: {
+        title: "चेतावनी: गलत ऑर्डर डिलीवरी को रोकने के लिए दिशानिर्देश",
+        intro: "गलत ऑर्डर को रोकने के लिए इन दिशानिर्देशों का पालन करें। बार-बार की गलतियों से जुर्माना या निलंबन हो सकता है।",
+        guideline1: "पिकअप पर ऑर्डर नंबर चेक करें:",
+        guideline1Text: "व्यापारी द्वारा दिया गया पैकेज सिर्फ न लें। आपको जाने से पहले सत्यापित करना होगा कि आपके ऐप में ऑर्डर नंबर पैकेज से मेल खाता है।",
+        guideline2: "डिलीवरी से पहले दोबारा चेक करें:",
+        guideline2Text: "यदि आपके पास कई ऑर्डर हैं, तो सुनिश्चित करें कि आप प्रत्येक ग्राहक को सही ऑर्डर दे रहे हैं।",
+        footer: "समस्याओं को रोकने के लिए इन दिशानिर्देशों का सावधानीपूर्वक पालन करें।"
+      },
+
+      section4: {
+        title: "सर्वोत्तम अभ्यास चेकलिस्ट",
+        items: [
+          "ड्रॉप-ऑफ स्थान पर जाने से पहले पते की पुष्टि करें",
+          "यदि आप स्थान नहीं ढूंढ पा रहे हैं तो ग्राहक से संपर्क करें",
+          "जब भी संभव हो व्यक्तिगत रूप से ऑर्डर सौंपें",
+          "डिलीवरी पूरी होने के बाद ही 'ड्रॉप ऑफ' पर क्लिक करें (पहले से क्लिक न करें)",
+          "सबूत के साथ किसी भी असामान्य समस्या की रिपोर्ट करें"
+        ]
+      },
+
+      section5: {
+        title: "सफल ऑर्डर डिलीवरी सुनिश्चित करने के लिए सुझाव",
+        tip1: "पहले से 'ड्रॉप ऑफ' पर क्लिक न करें",
+        tip1Items: [
+          "केवल ग्राहक को ऑर्डर सौंपने के बाद 'ड्रॉप-ऑफ' पर क्लिक करें",
+          "वास्तविक डिलीवरी से पहले 'ड्रॉप-ऑफ' पर क्लिक करने से ग्राहकों की ओर से भ्रम और शिकायतें हो सकती हैं, और कटौती हो सकती है"
+        ],
+        tip2: "ड्रॉप ऑफ से पहले ग्राहक से संपर्क करें",
+        tip2Items: [
+          "स्थान पर पहुंचने के बाद हमेशा कीटा ऐप के माध्यम से ग्राहक को कॉल या मैसेज करें",
+          "यदि आप पते के विवरण की पुष्टि करने के लिए ग्राहक से संपर्क नहीं कर पा रहे हैं, तो कीटा ऐप में 'ग्राहक से संपर्क करने में असमर्थ' श्रेणी के तहत रिपोर्ट करें",
+          "रिपोर्ट न करना और गलत स्थान पर ऑर्डर छोड़ना कीटा से जुर्माना हो सकता है"
+        ],
+        tip3: "ग्राहक से डिलीवरी निर्देशों का पालन करें",
+        tip3Items: [
+          "यदि ग्राहक किसी विशिष्ट स्थान पर डिलीवरी पसंद करता है, तो निर्देश के अनुसार ऑर्डर को ठीक उसी तरह रखें (सामने का दरवाजा, लॉबी, सामने की डेस्क आदि)",
+          "यदि ग्राहक सीधी डिलीवरी पसंद करता है, तो पहले उन्हें ऑर्डर देने का प्रयास करें। यदि वे पहुंच में नहीं आ सकते, तो उनके चुने हुए बैकअप स्थान पर डिलीवर करें (सामने का दरवाजा, लॉबी या सामने की डेस्क)",
+          "डिलीवरी के बाद, ऐप में सही त्वरित जवाब चुनें: 'निर्धारित स्थान पर रखा गया' या 'मैंने इसे आपकी दहलीज पर छोड़ दिया' ग्राहक की पसंद के अनुसार"
+        ],
+        tip4: "ठोस कारण और सबूत के साथ ऐप में असामान्य समस्याओं की रिपोर्ट करें",
+        tip4Items: [
+          "यदि आपको कोई समस्या आती है (जैसे ग्राहक तक पहुंच नहीं हो पा रही, गलत पता, असुरक्षित वातावरण) तो तुरंत ऐप में रिपोर्ट करें",
+          "स्पष्ट कारण प्रदान करें और आवश्यक सबूत संलग्न करें (फ़ोटो और स्क्रीनशॉट ग्राहक के साथ बातचीत के साथ पते में बदलाव के अनुरोध के मामले में)",
+          "विस्तृत रिपोर्टिंग विवादों को हल करने में मदद करती है और झूठे दावों से आपकी रक्षा करती है"
+        ]
+      }
+    }
+  };
+
+  const t = content[language];
+  const isRTL = language === 'ar' || language === 'ur';
+
+  return (
+    <div className={`min-h-screen bg-gradient-to-br from-yellow-50 to-yellow-100 p-4 ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+      {/* Header */}
+      <div className="max-w-7xl mx-auto">
+        <div className="bg-yellow-400 rounded-2xl shadow-2xl p-6 mb-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="bg-black text-yellow-400 rounded-xl p-3">
+                <Package className="w-8 h-8" />
+              </div>
+              <h1 className="text-3xl md:text-4xl font-bold text-black">{t.title}</h1>
+            </div>
+            
+            {/* Language Selector */}
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setLanguage('en')}
+                className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                  language === 'en' ? 'bg-black text-yellow-400' : 'bg-white text-black hover:bg-gray-100'
+                }`}
+              >
+                English
+              </button>
+              <button
+                onClick={() => setLanguage('ar')}
+                className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                  language === 'ar' ? 'bg-black text-yellow-400' : 'bg-white text-black hover:bg-gray-100'
+                }`}
+              >
+                العربية
+              </button>
+              <button
+                onClick={() => setLanguage('ur')}
+                className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                  language === 'ur' ? 'bg-black text-yellow-400' : 'bg-white text-black hover:bg-gray-100'
+                }`}
+              >
+                اردو
+              </button>
+              <button
+                onClick={() => setLanguage('bn')}
+                className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                  language === 'bn' ? 'bg-black text-yellow-400' : 'bg-white text-black hover:bg-gray-100'
+                }`}
+              >
+                বাংলা
+              </button>
+              <button
+                onClick={() => setLanguage('hi')}
+                className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                  language === 'hi' ? 'bg-black text-yellow-400' : 'bg-white text-black hover:bg-gray-100'
+                }`}
+              >
+                हिन्दी
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Section 1: Wrong Order Protocol */}
+        <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+          <div className="flex items-start gap-3 mb-4">
+            <AlertTriangle className="w-8 h-8 text-red-600 flex-shrink-0 mt-1" />
+            <h2 className="text-2xl font-bold text-gray-800">{t.section1.title}</h2>
+          </div>
+          
+          <div className="bg-green-50 border-2 border-green-300 rounded-xl p-4 mb-4">
+            <h3 className="font-bold text-green-800 mb-2">{t.section1.prevention}</h3>
+            <ul className="space-y-2">
+              {t.section1.preventionItems.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="bg-orange-50 border-2 border-orange-300 rounded-xl p-4 mb-4">
+            <h3 className="font-bold text-orange-800 mb-3">{t.section1.ifMissing}</h3>
+            <ol className="space-y-3">
+              {t.section1.steps.map((step, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <span className="bg-orange-400 text-white rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0 font-bold">
+                    {idx + 1}
+                  </span>
+                  <span className="text-gray-700 pt-0.5">{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="bg-red-50 border-2 border-red-400 rounded-xl p-4 mb-4">
+            <div className="flex items-start gap-3">
+              <XCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
+              <p className="font-bold text-red-800">{t.section1.warning}</p>
+            </div>
+          </div>
+
+          <div className="bg-yellow-50 border-2 border-yellow-400 rounded-xl p-4">
+            <p className="text-gray-800 font-medium">{t.section1.reminder}</p>
+          </div>
+        </div>
+
+        {/* Section 2: Do Not Mark Delivered Early */}
+        <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+          <div className="flex items-start gap-3 mb-4">
+            <Clock className="w-8 h-8 text-purple-600 flex-shrink-0 mt-1" />
+            <h2 className="text-2xl font-bold text-gray-800">{t.section2.title}</h2>
+          </div>
+
+          <div className="bg-red-50 border-2 border-red-300 rounded-xl p-4 mb-4">
+            <p className="text-gray-800 mb-2">{t.section2.notice}</p>
+            <p className="font-bold text-red-700">{t.section2.unacceptable}</p>
+          </div>
+
+          <div className="bg-green-50 border-2 border-green-400 rounded-xl p-4 mb-4">
+            <p className="font-bold text-green-800">{t.section2.rule}</p>
+          </div>
+
+          <div className="bg-orange-50 border-2 border-orange-400 rounded-xl p-4">
+            <p className="font-bold text-orange-800">{t.section2.consequence}</p>
+          </div>
+        </div>
+
+        {/* Section 3: Prevention Guidelines */}
+        <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+          <div className="flex items-start gap-3 mb-4">
+            <FileText className="w-8 h-8 text-blue-600 flex-shrink-0 mt-1" />
+            <h2 className="text-2xl font-bold text-gray-800">{t.section3.title}</h2>
+          </div>
+
+          <div className="bg-yellow-50 border-2 border-yellow-400 rounded-xl p-4 mb-4">
+            <p className="text-gray-800 font-medium">{t.section3.intro}</p>
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-blue-50 border-2 border-blue-300 rounded-xl p-4">
+              <h3 className="font-bold text-blue-800 mb-2">{t.section3.guideline1}</h3>
+              <p className="text-gray-700">{t.section3.guideline1Text}</p>
+            </div>
+
+            <div className="bg-purple-50 border-2 border-purple-300 rounded-xl p-4">
+              <h3 className="font-bold text-purple-800 mb-2">{t.section3.guideline2}</h3>
+              <p className="text-gray-700">{t.section3.guideline2Text}</p>
+            </div>
+          </div>
+
+          <div className="bg-gray-50 border-2 border-gray-300 rounded-xl p-4 mt-4">
+            <p className="text-gray-800 font-medium text-center">{t.section3.footer}</p>
+          </div>
+        </div>
+
+        {/* Section 4: Best Practices Checklist */}
+        <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+          <div className="flex items-start gap-3 mb-4">
+            <CheckCircle className="w-8 h-8 text-green-600 flex-shrink-0 mt-1" />
+            <h2 className="text-2xl font-bold text-gray-800">{t.section4.title}</h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {t.section4.items.map((item, idx) => (
+              <div key={idx} className="bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-300 rounded-xl p-4">
+                <div className="flex items-start gap-3">
+                  <span className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-sm">
+                    {idx + 1}
+                  </span>
+                  <p className="text-gray-800 pt-1">{item}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Section 5: Detailed Tips */}
+        <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+          <div className="flex items-start gap-3 mb-6">
+            <MessageCircle className="w-8 h-8 text-indigo-600 flex-shrink-0 mt-1" />
+            <h2 className="text-2xl font-bold text-gray-800">{t.section5.title}</h2>
+          </div>
+
+          {/* Tip 1 */}
+          <div className="bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-300 rounded-xl p-5 mb-5">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">1</span>
+              <h3 className="text-xl font-bold text-red-800">{t.section5.tip1}</h3>
+            </div>
+            <ul className="space-y-2 mr-10">
+              {t.section5.tip1Items.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <span className="text-red-600 font-bold mt-1">•</span>
+                  <span className="text-gray-700">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Tip 2 */}
+          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-300 rounded-xl p-5 mb-5">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">2</span>
+              <h3 className="text-xl font-bold text-blue-800">{t.section5.tip2}</h3>
+            </div>
+            <ul className="space-y-2 mr-10">
+              {t.section5.tip2Items.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <span className="text-blue-600 font-bold mt-1">•</span>
+                  <span className="text-gray-700">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Tip 3 */}
+          <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-300 rounded-xl p-5 mb-5">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">3</span>
+              <h3 className="text-xl font-bold text-purple-800">{t.section5.tip3}</h3>
+            </div>
+            <ul className="space-y-2 mr-10">
+              {t.section5.tip3Items.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <span className="text-purple-600 font-bold mt-1">•</span>
+                  <span className="text-gray-700">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Tip 4 */}
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-xl p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">4</span>
+              <h3 className="text-xl font-bold text-green-800">{t.section5.tip4}</h3>
+            </div>
+            <ul className="space-y-2 mr-10">
+              {t.section5.tip4Items.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <span className="text-green-600 font-bold mt-1">•</span>
+                  <span className="text-gray-700">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="bg-yellow-400 rounded-2xl shadow-xl p-6 text-center">
+          <p className="text-black font-bold text-xl mb-2">🏍️ Keeta Delivery Guidelines</p>
+          <p className="text-gray-800">Follow these guidelines to ensure smooth deliveries and avoid penalties</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default KeetaDashboard;
